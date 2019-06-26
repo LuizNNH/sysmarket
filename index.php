@@ -6,15 +6,29 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/d41c6c27a7.js"></script>
 
     <title>SGM - SysMarket v1.0</title>
   </head>
   <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h4>SGM - SysMarket</h4>
-            </div>
+    <div class="content">
+        <div class="loginbox">
+            <h4>SGM - SysMarket</h4>
+            <form>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Login</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Username/Email">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Senha</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Password">
+                </div>
+                <div>
+                    <button type="button" class="btn btn-secondary float-right">Entrar <i class="fas fa-sign-in-alt"></i></button>
+                </div>
+            </form>            
         </div>
     </div>
 
