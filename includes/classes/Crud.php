@@ -1,6 +1,6 @@
 <?php
 
-require_once 'BD.php';
+require_once 'DB.php';
 
 abstract class Crud extends DB{
 
@@ -17,7 +17,7 @@ abstract class Crud extends DB{
         $stmt->execute();
         return $stmt->fetch();
     }
-
+    
     public function findAll()
     {
         $sql = "SELECT * FROM $this->table";
