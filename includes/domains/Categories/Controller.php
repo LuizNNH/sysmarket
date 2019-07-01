@@ -35,8 +35,25 @@ switch ($request_method) {
         $product_id=intval($_GET["product_id"]);
         break;
     case 'DELETE':
-        // Delete Product
-        $product_id=intval($_GET["product_id"]);
+    
+        $category_id = intval($_GET["id"]);
+        $response = $Categories->delete($category_id);
+        if ($response)
+        {
+            $response = [
+                'success' => true,
+                'message' => 'Categoria Deletada!'
+            ];
+            echo json_encode($response);
+        } 
+        else
+        {
+            $response = [
+                'success' => false,
+                'message' => 'Nenhuma categoria encontrada para este id!'
+            ];
+            echo json_encode($response);
+        }
         break;
     default:
         // Invalid Request Method

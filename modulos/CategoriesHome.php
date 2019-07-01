@@ -45,10 +45,23 @@ $Categories = new Categories();
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <div class="pr-1">
-                                        <a href="" class="btn btn-warning btn-mini"><i class="fa fa-pencil"></i></a>
+                                        <button 
+                                        type="button" 
+                                        class="btn btn-warning btn-mini" 
+                                        data-toggle="modal" 
+                                        data-target="#editModal" 
+                                        data-whatever="<?php echo $Value->id; ?>"
+                                        ><i class="fa fa-pencil"></i></button>
                                     </div>
                                     <div>
-                                        <a href="" class="btn btn-danger btn-mini"><i class="fa fa-trash"></i></a>
+                                        <button 
+                                        type="button" 
+                                        class="btn btn-danger btn-mini" 
+                                        data-toggle="modal" 
+                                        data-target="#deleteModal" 
+                                        data-id="<?php echo $Value->id; ?>"
+                                        data-name="<?php echo $Value->category_name; ?>"
+                                        ><i class="fa fa-trash"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -90,6 +103,53 @@ $Categories = new Categories();
 </div>
 <!-- /.modal -->
 
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editModalLabel">New message</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="deleteModalLabel">Você deseja deletar</h4>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="delete" value="" id="deleteInput">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+        <button type="button" class="btn btn-warning" id="deleteCategory">Sim</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- REQUIRED JS SCRIPTS -->
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
@@ -107,50 +167,64 @@ $Categories = new Categories();
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
 
+<script src="<?php echo URL::getBase(); ?>dist/js/pages/categories.js"></script>
 <script>
-  $(function () {
-    $('#categoriesTable').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false,
-      'language'    : {
-          url: '<?php echo URL::getBase(); ?>pt-BR.json'
-      }
-    })
-  })
-</script>
-<script>
-$('#addCategory').click(function(){
-    if($('#inptCategoryNm').val() == "")
-    {
+$('#addCategory').click(function () {
+    if ($('#inptCategoryNm').val() == "") {
         $('.form-group').addClass('has-warning')
     }
-    else
-    {
+    else {
         $.post(
             "<?php echo URL::getBase(); ?>includes/Domains/Categories/Controller.php",
             $('#registerCategory').serialize()
-        ).done(function(data){
-            if(data.success == false)
-            {
+        ).done(function (data) {
+            if (data.success == false) {
                 Swal.fire({
-                type: 'error',
-                title: 'Oops...',
-                text: data.message,
-                })                  
+                    type: 'error',
+                    title: 'Oops...',
+                    text: data.message,
+                })
             } else {
                 Swal.fire({
-                type: 'success',
-                title: 'OK!',
-                text: data.message,
-                })                  
+                    type: 'success',
+                    title: 'OK!',
+                    text: data.message,
+                })
             }
         })
     }
 })
 
+
+$('#deleteCategory').click(function(e){
+    var id = $('#deleteInput').val()
+    e.preventDefault();
+    $.ajax({
+        url: "<?php echo URL::getBase(); ?>includes/Domains/Categories/Controller.php?id="+ id,
+        type: 'DELETE',
+        success: function (data) {
+            if (data.success == false)
+            {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: data.message,
+                })
+                           
+            }
+            else
+            {
+                Swal.fire({
+                    type: 'success',
+                    title: 'OK!',
+                    text: data.message,
+                })                 
+            }
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
+        }
+    });
+})
 </script>
 <?php include_once('./includes/_footer.php'); ?>

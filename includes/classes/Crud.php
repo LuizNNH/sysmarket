@@ -31,6 +31,6 @@ abstract class Crud extends DB{
         $sql = "UPDATE $this->table SET deleted_at = CURRENT_TIMESTAMP WHERE id = :id";
         $stmt = DB::prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
+        return $stmt->rowCount();
     }
 }

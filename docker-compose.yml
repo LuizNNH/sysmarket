@@ -22,3 +22,16 @@ services:
         - .:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php5/fpm/conf.d/99-overrides.ini
 
+    db:
+      image: postgres:9.4.23
+      container_name: sysmarket-db
+      volumes:
+        - db-data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_PASSWORD: df2019@%
+      ports:
+       - "5432:5432"
+
+volumes:
+  db-data:
+
