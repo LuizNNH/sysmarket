@@ -1,7 +1,11 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once "Config.php";
 
-class DB {
+class DB{
     private static $instance;
 
     public static function getInstance() 
@@ -18,9 +22,9 @@ class DB {
             {
                 echo $e->getMessage();
             }
-
-            return self::$instance;
         }
+            return self::$instance;
+
     }
 
     public static function prepare($sql)

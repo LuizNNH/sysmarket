@@ -85,12 +85,7 @@
       <!-- /.tab-pane -->
     </div>
   </aside>
-  <script>
-  $('.item-menu').click(function(e) {
-  $('.item-menu').removeClass('active');
-  $(this).addClass('active');
-  });
-  </script>
+
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->

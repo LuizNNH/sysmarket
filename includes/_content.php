@@ -3,12 +3,17 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        <?php echo $page_name; ?>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        <?php 
+          foreach ($breadcrumb as $bread) {
+              if ($bread['url'] == "") {
+        ?>
+        <li class="active"><?php echo $bread['title']?></li>
+        <?php } else { ?>
+        <li class="active"><a href="<?php echo $bread['url'] ?>"><i class="fa fa-dashboard"></i> <?php echo $bread['title']?></a></li>
+        <?php } } ?>
       </ol>
     </section>
 

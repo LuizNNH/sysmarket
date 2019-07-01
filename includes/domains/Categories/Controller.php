@@ -1,44 +1,34 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+header('Content-type: application/json');
+require_once "Validator.php";
+require_once "../../Classes/Categories.php";
 
-include_once "Validator.php";
-include_once "../../Classes/Users.php";
-
+$Categories = new Categories();
 $Validator = new Validator();
-$Users = new Users();
+
 
 $request_method = $_SERVER["REQUEST_METHOD"];
-switch($request_method)
-{
+switch ($request_method) {
     case 'GET':
-        if(!empty($_GET["product_id"]))
-        {
+        if (!empty($_GET["product_id"])) {
             $product_id=intval($_GET["product_id"]);
-        }
-        else
-        {
+        } else {
             echo "Vazio";
         }
         break;
     case 'POST':
-        $Verify = $Validator->NewUser($_POST);
-        if ($Verify)
-        {
+        $Verify = $Validator->NewCategory($_POST);
+        if ($Verify) {
             echo $Verify;
-        } 
-        else 
-        {   
-            
+        } else {
+            $Categories->setCategory($_POST['inptCategoryNm']);
+            $Categories->insert();
             $response = [
                 'success' => true,
-                'message' => "Usuário cadastrado com sucesso!"
+                'message' => "Categoria Cadastrada!"
             ];
             echo json_encode($response);
         }
-        
-
         break;
     case 'PUT':
         // Update Product

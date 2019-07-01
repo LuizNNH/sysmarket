@@ -1,6 +1,6 @@
 <?php 
 include_once "./includes/classes/Url.php";
-$paginaLink = basename($_SERVER['SCRIPT_NAME']);
+header("Content-type: text/html; charset=utf-8");
 ?>
 <!DOCTYPE html>
 <!--
@@ -21,10 +21,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect. -->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?php echo URL::getBase(); ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>dist/css/skins/skin-purple.min.css">
+  <link rel="stylesheet" href="<?php echo URL::getBase(); ?>dist/css/custom.css"> 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

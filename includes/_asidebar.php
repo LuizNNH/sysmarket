@@ -30,20 +30,25 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="item-menu active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+        <li class="header">PRODUTOS</li>
+        <li class="treeview <?php echo $tree == "controlproduct" ? "active menu-open" : "" ?>">
+          <a href=""><i class="fa fa-shopping-cart"></i> <span>Produtos Controle</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li class="<?php echo $ativo == "productscreate" ? "active" : "" ?>">
+              <a href="<?php echo URL::getBase(); ?>productscreate">
+                <i class="fa fa-plus-square"></i> <span>Cadastrar Produto</span>
+              </a>
+            </li>
           </ul>
+        </li>
+        <li class="<?php echo $ativo == "categorieshome" ? "active" : "" ?>">
+          <a href="<?php echo URL::getBase(); ?>categorieshome">
+            <i class="fa fa-tags"></i> <span>Gerenciar Categorias</span>
+          </a>
         </li>
         <li class="header">SYSTEM</li>
         <li class="<?php echo $ativo == "userscreate" ? "active" : "" ?>">
