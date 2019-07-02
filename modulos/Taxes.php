@@ -6,11 +6,12 @@ $page_name = "Gerenciar Impostos";
 $breadcrumb = [
     [
         'title' => 'Dashboard',
-        'url' => '/sysmarket'
+        'icon'  => 'fa-dashboard',
+        'url'   => URL::getBase()
     ],
     [
         'title' => 'Gerenciar Impostos',
-        'url' => ''
+        'url'   => ''
     ]
 ];
 include_once('./includes/_header.php');
@@ -20,7 +21,7 @@ include_once('./includes/_header.php');
     <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-body">
-                <a data-toggle="modal" data-target="#create-modal" class="btn btn-warning btn-mini" role="button">ADD <i class="fa fa-plus"></i></a>
+                <a class="btn btn-warning btn-mini" href="<?php echo URL::getBase(); ?>taxescreate">ADD <i class="fa fa-plus"></i></a>
             </div>
         </div>
     </div>

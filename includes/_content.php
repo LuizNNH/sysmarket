@@ -12,7 +12,7 @@
         ?>
         <li class="active"><?php echo $bread['title']?></li>
         <?php } else { ?>
-        <li class="active"><a href="<?php echo $bread['url'] ?>"><i class="fa fa-dashboard"></i> <?php echo $bread['title']?></a></li>
+        <li class="active"><a href="<?php echo $bread['url'] ?>"><i class="fa <?php echo $bread['icon']; ?>"></i> <?php echo $bread['title']?></a></li>
         <?php } } ?>
       </ol>
     </section>

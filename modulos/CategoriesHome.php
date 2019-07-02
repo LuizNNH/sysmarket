@@ -6,7 +6,7 @@ $page_name = "Gerenciar Categorias";
 $breadcrumb = [
     [
         'title' => 'Dashboard',
-        'url' => '/sysmarket'
+        'url' => URL::getBase()
     ],
     [
         'title' => 'Gerenciar Categorias',
