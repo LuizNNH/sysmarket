@@ -50,8 +50,8 @@ $Categories = new Categories();
                                         class="btn btn-warning btn-mini" 
                                         data-toggle="modal" 
                                         data-target="#editModal" 
-                                        data-name="<?php echo $Value->category_name; ?>"
                                         data-id="<?php echo $Value->id; ?>"
+                                        data-name="<?php echo $Value->category_name; ?>"
                                         ><i class="fa fa-pencil"></i></button>
                                     </div>
                                     <div>
@@ -116,8 +116,8 @@ $Categories = new Categories();
         <form action="/" id="editForm">
           <div class="form-group">
             <label for="recipient-name" class="control-label">Nome Categoria:</label>
-            <input type="text" class="form-control" id="inptCategoryNm" name="inptCategoryNm" value="">
-            <input type="hidden" class="form-control" id="inptCategoryId" name="inptCategoryId" value="">
+            <input type="text" class="form-control" id="inptCategoryEdit" name="inptCategoryEdit">
+            <input type="hidden" class="form-control" id="inptCategoryId" name="inptCategoryId">
           </div>
         </form>
       </div>
@@ -198,7 +198,7 @@ $('#addCategory').click(function () {
 
 $('#editCategory').click(function(e){
   var id = $('#inptCategoryId').val()
-  var category = $('#inptCategoryNm').val()
+  var category = $('#inptCategoryEdit').val()
 
   var obj = { id: id, category: category }
   e.preventDefault()

@@ -16,7 +16,7 @@ $('#editModal').on('show.bs.modal', function (event) {
     var name = button.data('name')
     var id = button.data('id')
     var modal = $(this)
-    modal.find('#inptCategoryNm').val(name)
+    modal.find('#inptCategoryEdit').val(name)
     modal.find('#inptCategoryId').val(id)
 })
 
