@@ -41,7 +41,11 @@ $Categories = new Categories();
                         <tr>
                             <td><?php echo $Value->category_name; ?></td>
                             <td><?php echo date('d/m/Y H:m:s', strtotime($Value->created_at)); ?></td>
-                            <td><?php echo $Value->updated_at; ?></td>
+                            <?php if ($Value->updated_at == null) { ?>
+                            <td>-</td>
+                            <?php } else { ?>
+                            <td><?php echo date('d/m/Y H:m:s', strtotime($Value->updated_at)); ?></td>
+                            <?php } ?>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <div class="pr-1">
