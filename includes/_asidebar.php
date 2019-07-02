@@ -50,6 +50,11 @@
             <i class="fa fa-tags"></i> <span>Gerenciar Categorias</span>
           </a>
         </li>
+        <li class="<?php echo $ativo == "taxes" ? "active" : "" ?>">
+          <a href="<?php echo URL::getBase(); ?>taxes">
+            <i class="fa fa-line-chart"></i> <span>Gerenciar Impostos</span>
+          </a>
+        </li>
         <li class="header">SYSTEM</li>
         <li class="<?php echo $ativo == "userscreate" ? "active" : "" ?>">
           <a href="<?php echo URL::getBase(); ?>userscreate">

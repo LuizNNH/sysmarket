@@ -169,7 +169,38 @@ $Categories = new Categories();
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
 
-<script src="<?php echo URL::getBase(); ?>dist/js/pages/categories.js"></script>
+<script>
+$(function () {
+    $('#categoriesTable').DataTable({
+        'paging': true,
+        'lengthChange': false,
+        'searching': false,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false,
+        'language': {
+            url: '<?php echo URL::getBase(); ?>pt-BR.json'
+        }
+    })
+})
+$('#editModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var name = button.data('name')
+    var id = button.data('id')
+    var modal = $(this)
+    modal.find('#inptCategoryEdit').val(name)
+    modal.find('#inptCategoryId').val(id)
+})
+
+$('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var recipient = button.data('name')
+    var id = button.data('id')
+    var modal = $(this)
+    modal.find('.modal-title').text('Você deseja apagar ' + recipient + '?')
+    modal.find('#deleteInput').val(id)
+})
+</script>
 <script>
 $('#addCategory').click(function () {
     if ($('#inptCategoryNm').val() == "") {
