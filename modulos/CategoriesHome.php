@@ -50,7 +50,8 @@ $Categories = new Categories();
                                         class="btn btn-warning btn-mini" 
                                         data-toggle="modal" 
                                         data-target="#editModal" 
-                                        data-whatever="<?php echo $Value->id; ?>"
+                                        data-name="<?php echo $Value->category_name; ?>"
+                                        data-id="<?php echo $Value->id; ?>"
                                         ><i class="fa fa-pencil"></i></button>
                                     </div>
                                     <div>
@@ -109,23 +110,20 @@ $Categories = new Categories();
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="editModalLabel">New message</h4>
+        <h4 class="modal-title" id="editModalLabel">Editar Categoria</h4>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/" id="editForm">
           <div class="form-group">
-            <label for="recipient-name" class="control-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <label for="recipient-name" class="control-label">Nome Categoria:</label>
+            <input type="text" class="form-control" id="inptCategoryNm" name="inptCategoryNm" value="">
+            <input type="hidden" class="form-control" id="inptCategoryId" name="inptCategoryId" value="">
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-warning" id="editCategory">Enviar</button>
       </div>
     </div>
   </div>
@@ -191,11 +189,47 @@ $('#addCategory').click(function () {
                     text: data.message,
                 })
             }
+            setTimeout(function () {
+              location.reload();
+            }, 2000);
         })
     }
 })
 
+$('#editCategory').click(function(e){
+  var id = $('#inptCategoryId').val()
+  var category = $('#inptCategoryNm').val()
 
+  var obj = { id: id, category: category }
+  e.preventDefault()
+  $.ajax({
+    url: "<?php echo URL::getBase(); ?>includes/Domains/Categories/Controller.php",
+    type: 'PUT',
+    data: JSON.stringify(obj),
+    dataType: 'JSON',
+    success: function(data){
+      if (data.success == false)
+      {
+          Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: data.message,
+          })          
+      }
+      else
+      {
+          Swal.fire({
+              type: 'success',
+              title: 'OK!',
+              text: data.message,
+          })                 
+      }
+      setTimeout(function () {
+          location.reload();
+      }, 2000);
+    }
+  })
+})
 $('#deleteCategory').click(function(e){
     var id = $('#deleteInput').val()
     e.preventDefault();
@@ -209,8 +243,7 @@ $('#deleteCategory').click(function(e){
                     type: 'error',
                     title: 'Oops...',
                     text: data.message,
-                })
-                           
+                })          
             }
             else
             {

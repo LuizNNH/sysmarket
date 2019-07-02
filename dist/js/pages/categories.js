@@ -13,10 +13,11 @@ $(function () {
 })
 $('#editModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
-    var recipient = button.data('whatever')
+    var name = button.data('name')
+    var id = button.data('id')
     var modal = $(this)
-    modal.find('.modal-title').text('New message to ' + recipient)
-    modal.find('.modal-body input').val(recipient)
+    modal.find('#inptCategoryNm').val(name)
+    modal.find('#inptCategoryId').val(id)
 })
 
 $('#deleteModal').on('show.bs.modal', function (event) {

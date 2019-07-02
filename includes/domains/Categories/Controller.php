@@ -31,8 +31,38 @@ switch ($request_method) {
         }
         break;
     case 'PUT':
-        // Update Product
-        $product_id=intval($_GET["product_id"]);
+        
+        $json = file_get_contents('php://input');
+        $obj  = json_decode($json, true);
+        if ($obj['category'] == "" or $obj['id'] == "")
+        {
+            $response = [
+                'success' => false,
+                'message' => 'Nada a Alterar!'
+            ];
+            echo json_encode($response);
+        }
+        else 
+        {
+            $Categories->setCategory($obj['category']);
+            $response = $Categories->update($obj['id']);
+            if ($response)
+            {
+                $response = [
+                    'success' => true,
+                    'message' => 'Alterada com Sucesso!'
+                ];
+                echo json_encode($response);  
+            } 
+            else
+            {
+                $response = [
+                    'success' => false,
+                    'message' => 'Erro ao processar a Query'
+                ];
+            echo json_encode($response);
+            }
+        }
         break;
     case 'DELETE':
     
