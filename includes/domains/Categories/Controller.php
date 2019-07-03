@@ -22,11 +22,20 @@ switch ($request_method) {
             echo $Verify;
         } else {
             $Categories->setCategory($_POST['inptCategoryNm']);
-            $Categories->insert();
-            $response = [
-                'success' => true,
-                'message' => "Categoria Cadastrada!"
-            ];
+            $response = $Categories->insert();
+            if ($response)
+            {
+                $response = [
+                    'success' => true,
+                    'message' => "Categoria Cadastrada!"
+                ];
+            } 
+            else {
+                $response = [
+                    'success' => false,
+                    'message' => "Erro na query contate administrador!"
+                ];
+            }
             echo json_encode($response);
         }
         break;

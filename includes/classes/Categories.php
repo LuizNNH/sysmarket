@@ -23,7 +23,8 @@ Class Categories extends Crud{
         $sql = "INSERT INTO $this->table (category_name, created_at) VALUES (:category, CURRENT_TIMESTAMP)";
         $stmt = DB::prepare($sql);
         $stmt->bindParam(':category', $this->category);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
     public function update($id)
@@ -32,7 +33,9 @@ Class Categories extends Crud{
         $stmt = DB::prepare($sql);
         $stmt->bindParam(':category', $this->category);
         $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->rowCount();
+
     }
 
     public function findByName()

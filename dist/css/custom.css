@@ -5,6 +5,10 @@
     border-radius: 5px;
 }
 
+.swal-size{
+  width:850px !important;
+}
+
 .d-none {
   display: none !important;
 }

@@ -42,7 +42,8 @@ class Taxes extends Crud
 
     public function insert()
     {
-        $sql = "INSERT INTO $this->table (state_id, category_id, value, created_at) VALUES (:state, :category, :tax, CURRENT_TIMESTAMP)";
+        $sql = "INSERT INTO $this->table (state_id, category_id, value, created_at) 
+                VALUES (:state, :category, :tax, CURRENT_TIMESTAMP)";
         $stmt = DB::prepare($sql);
         $stmt->bindParam(':state', $this->state);
         $stmt->bindParam(':category', $this->category);
@@ -53,21 +54,40 @@ class Taxes extends Crud
 
     public function update($id)
     {
-        $sql = "UPDATE $this->table SET category_name = :category, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $sql = "UPDATE $this->table 
+                    SET value = :tax, updated_at = CURRENT_TIMESTAMP 
+                WHERE id = :id";
         $stmt = DB::prepare($sql);
-        $stmt->bindParam(':category', $this->category);
+        $stmt->bindParam(':tax', $this->tax);
         $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
     public function findByStateAndCategory()
     {
-        $sql = "SELECT id FROM $this->table WHERE category_id = :category AND state_id = :state";
+        $sql = "SELECT id 
+                FROM $this->table 
+                WHERE category_id = :category 
+                AND state_id = :state 
+                AND deleted_at IS NULL";
         $stmt = DB::prepare($sql);
         $stmt->bindParam(':category', $this->category);
         $stmt->bindParam(':state', $this->state);
         $stmt->execute();
         return $stmt->rowCount();
+    }
+
+    public function findTaxesAll()
+    {
+        $sql = "SELECT tx.id, tx.value, tx.created_at, tx.updated_at, ct.category_name, st.name 
+                FROM $this->table tx
+                    JOIN states st ON st.id = tx.state_id
+                    JOIN categories ct ON ct.id = tx.category_id
+                WHERE tx.deleted_at IS NULL";
+        $stmt = DB::prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }
 

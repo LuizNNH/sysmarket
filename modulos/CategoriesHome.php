@@ -35,7 +35,7 @@ $Categories = new Categories();
                     </thead>
                     <tbody>
                         <?php 
-                            $Data = $Categories->findAll();
+                            $Data = $Categories->findAll('category_name asc');
                             foreach($Data as $Value) { 
                         ?>
                         <tr>

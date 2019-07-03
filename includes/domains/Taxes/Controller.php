@@ -31,7 +31,8 @@ switch($request_method)
         } 
         else 
         {
-            $Tax = ($_POST['inptPercent'] / 100);
+            $FormatTax = str_replace(",", ".", $_POST['inptPercent']);
+            $Tax = ($FormatTax / 100);
             $Taxes->setTax($Tax);
             $Taxes->setCategory($_POST['slctCategory']);
             $Taxes->setState($_POST['slctState']);
@@ -42,18 +43,70 @@ switch($request_method)
                     'success' => true,
                     'message' => "Imposto cadastrado com sucesso!"
                 ];
-                echo json_encode($response);
             }
-
+            else {
+                $response = [
+                    'success' => false,
+                    'message' => "Erro na query contate administrador!"
+                ];   
+            }
+            echo json_encode($response);
         }
         break;
     case 'PUT':
-        // Update Product
-        $product_id=intval($_GET["product_id"]);
+        $json = file_get_contents('php://input');
+        $obj  = json_decode($json, true);
+        if ($obj['percent'] == "" or $obj['id'] == "")
+        {
+            $response = [
+                'success' => false,
+                'message' => 'Nada a Alterar!'
+            ];
+            echo json_encode($response);
+        }
+        else 
+        {
+            $FormatTax = str_replace(",", ".", $obj['percent']);
+            $Tax = ($FormatTax / 100);
+            $Taxes->setTax($Tax);
+            $response = $Taxes->update($obj['id']);
+            if ($response)
+            {
+                $response = [
+                    'success' => true,
+                    'message' => 'Alterada com Sucesso!'
+                ];
+                echo json_encode($response);  
+            } 
+            else
+            {
+                $response = [
+                    'success' => false,
+                    'message' => 'Erro ao processar a Query'
+                ];
+            echo json_encode($response);
+            }
+        }
         break;
     case 'DELETE':
-        // Delete Product
-        $product_id=intval($_GET["product_id"]);
+        $tax_id = intval($_GET["id"]);
+        $response = $Taxes->delete($tax_id);
+        if ($response)
+        {
+            $response = [
+                'success' => true,
+                'message' => 'Imposto Deletada!'
+            ];
+            echo json_encode($response);
+        } 
+        else
+        {
+            $response = [
+                'success' => false,
+                'message' => 'Nenhuma imposto encontrado para este id!'
+            ];
+            echo json_encode($response);
+        }
         break;
     default:
         // Invalid Request Method

@@ -36,7 +36,7 @@ $Categories = new Categories();
                             <div class="form-group">
                                 <label for="lblPercent">Percentual*:</label>
                                 <input 
-                                type="text" 
+                                type="number" 
                                 id="inptPercent" 
                                 name="inptPercent" 
                                 class="form-control"
@@ -85,10 +85,6 @@ $Categories = new Categories();
 <script src="<?php echo URL::getBase(); ?>bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?php echo URL::getBase(); ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- InputMask -->
-<script src="<?php echo URL::getBase(); ?>plugins/input-mask/jquery.inputmask.js"></script>
-<script src="<?php echo URL::getBase(); ?>plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="<?php echo URL::getBase(); ?>plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo URL::getBase(); ?>dist/js/adminlte.min.js"></script>
 <!-- SlimScroll -->
@@ -96,10 +92,6 @@ $Categories = new Categories();
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
 
-
-<script>
-$('#inptPercent').inputmask('999.99', { 'placeholder': '057.76' })
-</script>
 <script>
 $('#addTaxes').click(function(e)
 {
@@ -115,16 +107,19 @@ $('#addTaxes').click(function(e)
                 title: 'Oops...',
                 text: data.message,
             })
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
         } else {
             Swal.fire({
                 type: 'success',
                 title: 'OK!',
                 text: data.message,
             })
-        }
-        setTimeout(function () {
-          location.reload();
-        }, 2000);        
+            setTimeout(function () {
+                location.reload();
+            }, 2000);            
+        }     
     })
 })
 
