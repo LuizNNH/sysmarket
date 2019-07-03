@@ -21,32 +21,55 @@ $breadcrumb = [
 ];
 include_once('./includes/_header.php');
 include_once('./includes/Classes/States.php');
+include_once('./includes/Classes/Categories.php');
 $States = new States();
+$Categories = new Categories();
 ?>
 
 <div class="row">
     <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-body">
-                <form action="">
+                <form action="/" id="formTaxes">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="lblPercent">Percentual*:</label>
-                                <input type="text" id="inptPercent" name="inptPercent" class="form-control" placeholder="100">
+                                <input 
+                                type="text" 
+                                id="inptPercent" 
+                                name="inptPercent" 
+                                class="form-control"
+                                >
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="lblState">Estado Vigente*:</label>
-                                <select name="slctState" id="slctState">
-                                    <?php $Data = $States->findAll();
+                                <select name="slctState" id="slctState" class="form-control">
+                                    <?php $Data = $States->findAll('name ASC');
                                     foreach($Data as $Value) {  
                                     ?>
                                     <option value="<?php echo $Value->id ?>"><?php echo $Value->name; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblCategory">Categoria*:</label>
+                                <select name="slctCategory" id="slctCategory" class="form-control">
+                                <?php $Data = $Categories->findAll('category_name ASC');
+                                foreach($Data as $Value) { ?>
+                                <option value="<?php echo $Value->id; ?>"><?php echo $Value->category_name; ?></option>
+                                <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-warning pull-right" id="addTaxes">Enviar</button>
                         </div>
                     </div>
                 </form>
@@ -62,14 +85,49 @@ $States = new States();
 <script src="<?php echo URL::getBase(); ?>bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?php echo URL::getBase(); ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- InputMask -->
+<script src="<?php echo URL::getBase(); ?>plugins/input-mask/jquery.inputmask.js"></script>
+<script src="<?php echo URL::getBase(); ?>plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="<?php echo URL::getBase(); ?>plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo URL::getBase(); ?>dist/js/adminlte.min.js"></script>
-<!-- DataTables -->
-<script src="<?php echo URL::getBase(); ?>bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo URL::getBase(); ?>bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
 <script src="<?php echo URL::getBase(); ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
+
+
+<script>
+$('#inptPercent').inputmask('999.99', { 'placeholder': '057.76' })
+</script>
+<script>
+$('#addTaxes').click(function(e)
+{
+    e.preventDefault();
+    $.post(
+        "<?php echo URL::getBase(); ?>includes/Domains/Taxes/Controller.php",
+        $('#formTaxes').serialize()
+    ).done(function (data)
+    {
+        if (data.success == false) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: data.message,
+            })
+        } else {
+            Swal.fire({
+                type: 'success',
+                title: 'OK!',
+                text: data.message,
+            })
+        }
+        setTimeout(function () {
+          location.reload();
+        }, 2000);        
+    })
+})
+
+</script>
 
 <?php include_once('./includes/_footer.php'); ?>

@@ -18,9 +18,9 @@ abstract class Crud extends DB{
         return $stmt->fetch();
     }
     
-    public function findAll()
+    public function findAll($order)
     {
-        $sql = "SELECT * FROM $this->table WHERE deleted_at IS NULL";
+        $sql = "SELECT * FROM $this->table WHERE deleted_at IS NULL ORDER BY $order";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
