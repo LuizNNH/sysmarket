@@ -3,8 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // Variaveis para controle do menu e do breadcrumb
-$ativo = "productscreate";
-$tree = "controlproduct";
+$ativo = "productshome";
 $page_name = "Cadastro de Produtos";
 $breadcrumb = [
     [
@@ -13,9 +12,14 @@ $breadcrumb = [
         'icon'  => 'fa-dashboard'
     ],
     [
+        'title' => 'Gerenciar Produtos',
+        'url'   => URL::getBase().'productshome',
+        'icon'  => 'fa-bookmark'
+    ],
+    [
         'title' => 'Cadastrar Produto',
         'url'   => ''
-    ]
+    ]    
 ];
 require_once('./includes/classes/Laboratories.php');
 require_once('./includes/classes/Categories.php');

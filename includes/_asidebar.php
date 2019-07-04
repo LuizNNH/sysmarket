@@ -31,20 +31,11 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">PRODUTOS</li>
-        <li class="treeview <?php echo $tree == "controlproduct" ? "active menu-open" : "" ?>">
-          <a href=""><i class="fa fa-shopping-cart"></i> <span>Produtos Controle</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+        <li class="<?php echo $ativo == "productshome" ? "active" : "" ?>">
+          <a href="<?php echo URL::getBase(); ?>productshome">
+            <i class="fa fa-bookmark"></i> <span>Gerenciar Produtos</span>
           </a>
-          <ul class="treeview-menu">
-            <li class="<?php echo $ativo == "productscreate" ? "active" : "" ?>">
-              <a href="<?php echo URL::getBase(); ?>productscreate">
-                <i class="fa fa-plus-square"></i> <span>Cadastrar Produto</span>
-              </a>
-            </li>
-          </ul>
-        </li>
+        </li>        
         <li class="<?php echo $ativo == "categorieshome" ? "active" : "" ?>">
           <a href="<?php echo URL::getBase(); ?>categorieshome">
             <i class="fa fa-tags"></i> <span>Gerenciar Categorias</span>

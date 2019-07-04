@@ -134,13 +134,13 @@ class Products extends Crud
         return $stmt->rowCount();
     }
 
-    public function findTaxesAll()
+    public function findProductsAll()
     {
-        $sql = "SELECT tx.id, tx.value, tx.created_at, tx.updated_at, ct.category_name, st.name 
-                FROM $this->table tx
-                    JOIN states st ON st.id = tx.state_id
-                    JOIN categories ct ON ct.id = tx.category_id
-                WHERE tx.deleted_at IS NULL";
+        $sql = "SELECT pd.id, pd.name, pd.apresentation, pd.price, pd.created_at, pd.updated_at, lb.lab_name
+                FROM $this->table pd
+                    JOIN laboratories lb ON lb.id = pd.laboratory_id
+                WHERE pd.deleted_at IS NULL
+                ORDER BY pd.name ASC, lb.lab_name";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
