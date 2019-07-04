@@ -136,6 +136,7 @@ $Categories = new Categories();
 <script src="<?php echo URL::getBase(); ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
+<script src="<?php echo URL::getBase(); ?>dist/js/redirects.js"></script>
 <script>
 $('#createProduct').click(function(e)
 {
@@ -144,7 +145,24 @@ $('#createProduct').click(function(e)
         "<?php echo URL::getBase(); ?>includes/Domains/Products/Controller.php",
         $('#formProduct').serialize()
     ).done(function (data){
-        console.log(data);
+        if (data.success == false)
+        {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: data.message,
+            })
+        }
+        else
+        {
+            Swal.fire({
+                type: 'success',
+                title: 'OK!',
+                text: data.message,
+            }).then(function() {
+                pageProducts()
+            });                 
+        }  
     })
 })
 </script>

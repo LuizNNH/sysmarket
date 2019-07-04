@@ -5,13 +5,15 @@ require_once 'Crud.php';
 class Users extends Crud{
 
     protected $table = 'users';
-    private $username;
+    private $cpf;
     private $email;
     private $password;
+    private $access;
+    private $name;
     
-    public function getUsername()
+    public function getCpf()
     {
-        return $this->username;
+        return $this->cpf;
     }
 
     public function getEmail()
@@ -24,7 +26,17 @@ class Users extends Crud{
         return $this->password;
     }
 
-    public function setUsername($username)
+    public function getAccessLevel()
+    {
+        return $this->access;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setCpf($cpf)
     {
         $this->username = $username;
     }
@@ -39,14 +51,28 @@ class Users extends Crud{
         $this->password = $password;
     }
 
+    public function setAccessLevel($access)
+    {
+        $this->access = $access;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
     public function insert()
     {
-        $sql = "INSERT INTO $this->table (username, password, email) VALUES (:username, :password, :email)";
+        $sql = "INSERT INTO $this->table (name, cpf, email, password, access_level, created_at) 
+                VALUES (:name, :cpf, :email, :password, :access, CURRENT_TIMESTAMP)";
         $stmt = DB::prepare($sql);
-        $stmt->bindParam(':username', $this->username);
-        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':cpf', $this->cpf);
         $stmt->bindParam(':email', $this->email);
-        return $stmt->execute();
+        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':access', $this->access);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
     public function update($id)
@@ -61,21 +87,21 @@ class Users extends Crud{
 
     }
 
-    public function findByUsername()
+    public function findByCpf()
     {
-        $sql = "SELECT user_id FROM $this->table WHERE username = :username";
+        $sql = "SELECT id FROM $this->table WHERE cpf = :cpf";
         $stmt = DB::prepare($sql);
-        $stmt->bindParam(':username', $this->username);
+        $stmt->bindParam(':cpf', $this->cpf);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->rowCount();
     }
 
     public function findByEmail()
     {
-        $sql = "SELECT user_id FROM $this->table WHERE email = :email";
+        $sql = "SELECT id FROM $this->table WHERE email = :email";
         $stmt = DB::prepare($sql);
         $stmt->bindParam(':email', $this->email);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->rowCount();
     }
 }

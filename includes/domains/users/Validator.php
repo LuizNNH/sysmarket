@@ -12,7 +12,7 @@ class Validator {
     public function NewUser($data)
     {
 
-        if (empty($data['inptUsername']) or empty($data['inptPassword']) or empty($data['inptEmail']))
+        if (empty($data['inptName']) or empty($data['inptEmail']) or empty($data['inptCpf']) or empty($data['inptPassword']) or empty($data['slctType']))
         {
             $response = [
                 'success' => false,
@@ -20,13 +20,13 @@ class Validator {
             ];
             return json_encode($response);
         } else {
-            $this->instance->setUsername($data['inptUsername']);
-            $response = $this->instance->findByUsername();
-            if (!empty($response))
+            $this->instance->setCpf($data['inptUsername']);
+            $response = $this->instance->findByCpf();
+            if ($response)
             {
                 $response = [
                     'success' => false,
-                    'message' => "Já existe um usuário cadastrado com esse nome"
+                    'message' => "Já existe um usuário cadastrado com esse Cpf!"
                 ];
                 return json_encode($response);
             } 
@@ -35,7 +35,7 @@ class Validator {
                 $this->instance->setEmail($data['inptEmail']);
                 $response = $this->instance->findByEmail();
 
-                if (!empty($response))
+                if ($response)
                 {
                     $response = [
                         'success' => false,
