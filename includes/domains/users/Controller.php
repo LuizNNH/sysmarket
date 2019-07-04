@@ -3,6 +3,7 @@ header('Content-type: application/json');
 
 include_once "Validator.php";
 include_once "../../Classes/Users.php";
+include_once "Utils.php";
 
 $Validator = new Validator();
 $Users = new Users();
@@ -28,7 +29,9 @@ switch($request_method)
         } 
         else 
         {   
-            
+            $Password = Utils::parsePassword($_POST['inptPass']);
+            $Name = Utils::toUpperCase($_POST['inptName']);
+            $Cpf = Utils::removeBadChars($_POST['inptCpf']);
             $response = [
                 'success' => true,
                 'message' => "Usuário cadastrado com sucesso!"

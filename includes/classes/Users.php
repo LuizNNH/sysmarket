@@ -38,7 +38,7 @@ class Users extends Crud{
 
     public function setCpf($cpf)
     {
-        $this->username = $username;
+        $this->cpf = $cpf;
     }
 
     public function setEmail($email)
