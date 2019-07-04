@@ -9,60 +9,89 @@ $page_name = "Cadastro de Produtos";
 $breadcrumb = [
     [
         'title' => 'Dashboard',
-        'url' => '/sysmarket'
+        'url'   => URL::getBase(),
+        'icon'  => 'fa-dashboard'
     ],
     [
         'title' => 'Cadastrar Produto',
-        'url' => ''
+        'url'   => ''
     ]
 ];
 require_once('./includes/classes/Laboratories.php');
+require_once('./includes/classes/Categories.php');
 include_once('./includes/_header.php');
 
 $Laboratories = new Laboratories();
+$Categories = new Categories();
 ?>
 
 <div class="row">
     <div class="col-md-12">
-        <form>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="lblNmProduct">Nome Produto*:</label>
-                        <input type="text" class="form-control" id="inptNmProduct" name="inptNmProduct" placeholder="Aciclovir" required>
-                    </div>                   
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="lblApresentation">Apresentação*:</label>
-                        <input type="text" class="form-control" id="inptApresentation" name="inptApresentation" placeholder="20MG C/30 CPS" required>
-                    </div>                   
-                </div>
+        <div class="box box-warning">
+            <div class="box-body mt-4">
+                <form id="formProduct">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblEan">EAN*:</label>
+                                <input type="number" id="inptEan" name="inptEan" class="form-control" placeholder="7891721023477">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblNmProduct">Nome Produto*:</label>
+                                <input type="text" class="form-control" id="inptNmProduct" name="inptNmProduct" placeholder="Aciclovir" required>
+                            </div>                   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblApresentation">Apresentação*:</label>
+                                <input type="text" class="form-control" id="inptApresentation" name="inptApresentation" placeholder="20MG C/30 CPS" required>
+                            </div>                   
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblLaboratory">Laboratorio*:</label>
+                                <select name="slctLaboratory" id="slctLaboratory" class="form-control">
+                                    <?php 
+                                        $Data = $Laboratories->findAll('lab_name asc');
+                                        foreach($Data as $Value) { 
+                                    ?>
+                                        <option value="<?php echo $Value->id; ?>"><?php echo $Value->lab_name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>                   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblCategory">Categoria*:</label>
+                                <select name="slctCategory" id="slctCategory" class="form-control">
+                                    <?php 
+                                        $Data = $Categories->findAll('category_name asc');
+                                        foreach($Data as $Value) { 
+                                    ?>
+                                        <option value="<?php echo $Value->id; ?>"><?php echo $Value->category_name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>                   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblPrice">Preço*:</label> 
+                                <input type="number" id="inptPrice" name="inptPrice" class="form-control" placeholder="20,00">
+                            </div>
+                        </div>
+                    </div>     
+                </form> 
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-warning pull-right" id="createProduct">Cadastrar</button>
+                    </div>
+                </div>                            
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="lblLaboratory">Laboratorio*:</label>
-                        <select name="slctLaboratory" id="slctLaboratory" class="form-control">
-                            <?php 
-                                $Data = $Laboratories->findAll();
-                                foreach($Data as $Value) { 
-                            ?>
-                                <option value="<?php echo $Value->lab_id; ?>"><?php echo $Value->lab_name; ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>                   
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="lblCategory">Categoria*:</label>
-                        <select name="slctCategory" id="slctCategory" class="form-control">
-
-                        </select>
-                    </div>                   
-                </div>
-            </div>          
-        </form>
+        </div>
     </div>
 </div>
 
@@ -82,5 +111,16 @@ $Laboratories = new Laboratories();
 <script src="<?php echo URL::getBase(); ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
-
+<script>
+$('#createProduct').click(function(e)
+{
+    e.preventDefault();
+    $.post({
+        '<?php echo URL::getBase(); ?>includes/Domains/Products/Controller.php',
+        $('#formProduct').serialize()
+    }).done(function (data){
+        console.log(data);
+    })
+})
+</script>
 <?php include_once('./includes/_footer.php'); ?>

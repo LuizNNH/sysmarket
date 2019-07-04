@@ -51,7 +51,7 @@ $Taxes = new Taxes();
                             <?php } ?>
                             <td>
                                <div class="d-flex justify-content-center">
-                                    <div class="pr-1">
+                                    <div class="pr-1"></div>
                                         <button
                                         type="button" 
                                         data-toggle="modal" 
