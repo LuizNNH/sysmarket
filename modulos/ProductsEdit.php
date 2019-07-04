@@ -1,11 +1,7 @@
-<?php 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+<?php
 // Variaveis para controle do menu e do breadcrumb
-$ativo = "productscreate";
-$tree = "controlproduct";
-$page_name = "Cadastro de Produtos";
+$ativo = "products";
+$page_name = "Editar Produtos";
 $breadcrumb = [
     [
         'title' => 'Dashboard',
@@ -13,16 +9,22 @@ $breadcrumb = [
         'icon'  => 'fa-dashboard'
     ],
     [
-        'title' => 'Cadastrar Produto',
+        'title' => 'Editar Produto',
         'url'   => ''
     ]
 ];
-require_once('./includes/classes/Laboratories.php');
-require_once('./includes/classes/Categories.php');
+require_once('./includes/Classes/Laboratories.php');
+require_once('./includes/Classes/Categories.php');
+require_once('./includes/Classes/Products.php');
 include_once('./includes/_header.php');
 
 $Laboratories = new Laboratories();
 $Categories = new Categories();
+$Products = new Products;
+
+$ProductId = intval($_GET['id']);
+$Data = $Products->find($ProductId);
+var_dump($Data);
 ?>
 
 <div class="row">
@@ -30,6 +32,7 @@ $Categories = new Categories();
         <div class="box box-warning">
             <div class="box-body mt-4">
                 <form id="formProduct">
+                    <input type="hidden" id="intpIdProduct" name="inptIdProduct" value="">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -39,7 +42,8 @@ $Categories = new Categories();
                                 id="inptEan" 
                                 name="inptEan" 
                                 class="form-control" 
-                                placeholder="7891721023477" required>
+                                placeholder="7891721023477" 
+                                value="<?php echo $Data->ean; ?>">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -50,7 +54,8 @@ $Categories = new Categories();
                                 class="form-control" 
                                 id="inptNmProduct" 
                                 name="inptNmProduct" 
-                                placeholder="Aciclovir" required>
+                                placeholder="Aciclovir" 
+                                value="<?php echo $Data->name; ?>" required>
                             </div>                   
                         </div>
                         <div class="col-md-4">
@@ -61,7 +66,8 @@ $Categories = new Categories();
                                 class="form-control" 
                                 id="inptApresentation" 
                                 name="inptApresentation" 
-                                placeholder="20MG C/30 CPS" required>
+                                placeholder="20MG C/30 CPS" 
+                                value="<?php echo $Data->apresentation; ?>" required>
                             </div>                   
                         </div>
                     </div>
@@ -70,12 +76,16 @@ $Categories = new Categories();
                             <div class="form-group">
                                 <label for="lblLaboratory">Laboratorio*:</label>
                                 <select name="slctLaboratory" id="slctLaboratory" class="form-control">
-                                    <?php 
-                                        $Data = $Laboratories->findAll('lab_name asc');
-                                        foreach($Data as $Value) { 
+                                    <?php
+                                        $SlLabs = $Laboratories->findAll('lab_name asc');
+                                        foreach ($SlLabs as $Value) {
+                                            if ($Data->laboratory_id = $Value->id) {
                                     ?>
+                                        <option value="<?php echo $Value->id; ?>" selected><?php echo $Value->lab_name; ?></option>
+                                    <?php } elseif ($Value->id != $Data->laboratory_id) { ?>
                                         <option value="<?php echo $Value->id; ?>"><?php echo $Value->lab_name; ?></option>
-                                    <?php } ?>
+                                    <?php }
+                                        } ?>
                                 </select>
                             </div>                   
                         </div>
@@ -83,12 +93,16 @@ $Categories = new Categories();
                             <div class="form-group">
                                 <label for="lblCategory">Categoria*:</label>
                                 <select name="slctCategory" id="slctCategory" class="form-control">
-                                    <?php 
-                                        $Data = $Categories->findAll('category_name asc');
-                                        foreach($Data as $Value) { 
+                                    <?php
+                                        $SlCategory = $Categories->findAll('category_name asc');
+                                        foreach ($SlCategory as $Value) {
+                                            if ($Data->category_id = $Value->id) {
                                     ?>
+                                        <option value="<?php echo $Value->id; ?>" selected><?php echo $Value->category_name; ?></option>
+                                    <?php } elseif ($Value->id != $Data->category_id) { ?>
                                         <option value="<?php echo $Value->id; ?>"><?php echo $Value->category_name; ?></option>
-                                    <?php } ?>
+                                    <?php }
+                                        } ?>
                                 </select>
                             </div>                   
                         </div>
@@ -99,7 +113,8 @@ $Categories = new Categories();
                                 type="number" 
                                 id="inptPrice" 
                                 name="inptPrice" 
-                                class="form-control" 
+                                class="form-control"
+                                value="<?php echo $Data->price; ?>"
                                 placeholder="20,00" required>
                             </div>
                         </div>
@@ -107,7 +122,7 @@ $Categories = new Categories();
                 </form> 
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-warning pull-right" id="createProduct">Cadastrar</button>
+                        <button class="btn btn-warning pull-right" id="editProduct">Salvar</button>
                     </div>
                 </div>                            
             </div>
@@ -131,16 +146,68 @@ $Categories = new Categories();
 <script src="<?php echo URL::getBase(); ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
+
 <script>
-$('#createProduct').click(function(e)
+
+function pageReload()
 {
+    location.reload();
+}
+
+function pageCategories()
+{
+    window.location.href = "/categorieshome";
+}
+
+</script>
+<script>
+$('#editProduct').click(function(e)
+{
+    var id = "<?php echo $_GET['id'] ?>",
+        name = $('#inptNmProduct').val(),
+        apresentation = $('#inptApresentation').val(),
+        ean = $('#inptEan').val(),
+        category = $('#slctCategory').val(),
+        laboratory = $('#slctLaboratory').val(),
+        price = $('#inptPrice').val();
+
+    var obj = {
+        id: id, 
+        name: name, 
+        apresentation: apresentation, 
+        ean: ean, 
+        category: category, 
+        laboratory: laboratory, 
+        price: price 
+    };
+    
     e.preventDefault();
-    $.post(
-        "<?php echo URL::getBase(); ?>includes/Domains/Products/Controller.php",
-        $('#formProduct').serialize()
-    ).done(function (data){
-        console.log(data);
+    $.ajax({
+        url: "<?php echo URL::getBase(); ?>includes/Domains/Products/Controller.php",
+        type: 'PUT',
+        data: JSON.stringify(obj),
+        dataType: 'JSON',
+        success: function(data){
+        if (data.success == false)
+        {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: data.message,
+            })          
+        }
+        else
+        {
+            Swal.fire({
+                type: 'success',
+                title: 'OK!',
+                text: data.message,
+            }).then(function() {
+                pageCategories()
+            });                 
+        }
+        }
     })
-})
+});
 </script>
 <?php include_once('./includes/_footer.php'); ?>

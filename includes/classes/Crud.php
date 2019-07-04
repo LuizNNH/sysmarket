@@ -11,7 +11,7 @@ abstract class Crud extends DB{
 
     public function find($id)
     {
-        $sql = "SELEC * FROM $this->table WHERE id = :id AND deleted_at IS NULL";
+        $sql = "SELECT * FROM $this->table WHERE id = :id AND deleted_at IS NULL";
         $stmt = DB::prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();

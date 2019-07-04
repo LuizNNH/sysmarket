@@ -5,9 +5,35 @@
     border-radius: 5px;
 }
 
-.swal-size{
-  width:850px !important;
+.pagination > li > a
+{
+    background-color: white;
+    color: #f39c12;
 }
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #f39c12;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #f39c12;
+    border: solid 1px #f39c12;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #f39c12;
+    border: solid 1px #f39c12;
+}
+
 
 .d-none {
   display: none !important;

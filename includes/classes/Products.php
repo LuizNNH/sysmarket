@@ -79,11 +79,21 @@ class Products extends Crud
     public function update($id)
     {
         $sql = "UPDATE $this->table 
-                    SET value = :tax, updated_at = CURRENT_TIMESTAMP 
-                WHERE id = :id";
+                    SET name = :name, 
+                    apresentation = :apresentation,
+                    ean = :ean,
+                    laboratory_id = :laboratory,
+                    category_id = :category,
+                    price = :price,
+                    updated_at = CURRENT_TIMESTAMP 
+                WHERE id = $id";
         $stmt = DB::prepare($sql);
-        $stmt->bindParam(':tax', $this->tax);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':apresentation', $this->apresentation);
+        $stmt->bindParam(':ean', $this->ean);
+        $stmt->bindParam(':laboratory', $this->laboratory);
+        $stmt->bindParam(':category', $this->category);
+        $stmt->bindParam(':price', $this->price);
         $stmt->execute();
         return $stmt->rowCount();
     }

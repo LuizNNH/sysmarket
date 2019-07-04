@@ -61,4 +61,52 @@ class Validator
             }
         }
     }
+
+    public function UpdateProduct($data)
+    {
+        if (empty($data['id']) or empty($data['name']) or empty($data['apresentation']) or empty($data['ean']) or empty($data['laboratory']) or empty($data['category']) or empty($data['price']))
+        {
+            $response = [
+                'success' => false,
+                'message' => "Por favor preencha todos os campos corretamente!"
+            ];
+            return json_encode($response);
+        } else {
+
+            if ($data['price'] <= 0)
+            {
+                $response = [
+                    'success' => false,
+                    'message' => "O preço deve ser maior que zero!"
+                ];
+                return json_encode($response);
+            } else {
+                $this->instance->setCategory($data['category']);
+                $response = $this->instance->findCategoryExists();
+                if ($response = 0)
+                {
+                    $response = [
+                        'success' => false,
+                        'message' => "A categoria não existe!"
+                    ];
+                    return json_encode($response);
+                } else {
+                    $this->instance->setLaboratory($data['laboratory']);
+                    $response = $this->instance->findLaboratoryExists();
+                    if ($response = 0) 
+                    {
+                        $response = [
+                            'success' => false,
+                            'message' => "O Laboratorio não existe!"
+                        ];
+                        return json_encode($response);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+
+        }
+    }
 }
