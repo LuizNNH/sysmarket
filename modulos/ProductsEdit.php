@@ -146,20 +146,7 @@ var_dump($Data);
 <script src="<?php echo URL::getBase(); ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo URL::getBase(); ?>bower_components/fastclick/lib/fastclick.js"></script>
-
-<script>
-
-function pageReload()
-{
-    location.reload();
-}
-
-function pageCategories()
-{
-    window.location.href = "/categorieshome";
-}
-
-</script>
+<script src="<?php echo URL::getBase(); ?>dist/js/redirects.js"></script>
 <script>
 $('#editProduct').click(function(e)
 {
@@ -194,7 +181,9 @@ $('#editProduct').click(function(e)
                 type: 'error',
                 title: 'Oops...',
                 text: data.message,
-            })          
+            }).then(function() {
+                pageReload()
+            });               
         }
         else
         {
@@ -203,7 +192,7 @@ $('#editProduct').click(function(e)
                 title: 'OK!',
                 text: data.message,
             }).then(function() {
-                pageCategories()
+                pageProducts()
             });                 
         }
         }

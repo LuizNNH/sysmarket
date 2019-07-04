@@ -95,7 +95,7 @@ switch($request_method)
         {
             $response = [
                 'success' => true,
-                'message' => 'Imposto Deletada!'
+                'message' => 'Imposto Deletado!'
             ];
             echo json_encode($response);
         } 
@@ -103,7 +103,7 @@ switch($request_method)
         {
             $response = [
                 'success' => false,
-                'message' => 'Nenhuma imposto encontrado para este id!'
+                'message' => 'Nenhum imposto encontrado para este id!'
             ];
             echo json_encode($response);
         }

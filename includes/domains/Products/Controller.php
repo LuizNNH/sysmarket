@@ -65,8 +65,24 @@ switch ($request_method) {
         }
         break;
     case 'DELETE':
-        // Delete Product
-        $product_id=intval($_GET["product_id"]);
+        $product_id = intval($_GET["id"]);
+        $response = $Products->delete($product_id);
+        if ($response)
+        {
+            $response = [
+                'success' => true,
+                'message' => 'Produto Deletado!'
+            ];
+            echo json_encode($response);
+        } 
+        else
+        {
+            $response = [
+                'success' => false,
+                'message' => 'Nenhum imposto encontrado para este id!'
+            ];
+            echo json_encode($response);
+        }
         break;
     default:
         // Invalid Request Method

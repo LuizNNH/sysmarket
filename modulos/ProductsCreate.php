@@ -32,7 +32,8 @@ $Categories = new Categories();
 <div class="row">
     <div class="col-md-12">
         <div class="box box-warning">
-            <div class="box-body mt-4">
+            <div class="box-body">
+                <a class="btn btn-warning btn-mini" href="<?php echo URL::getBase(); ?>productshome"><i class="fa fa-arrow-left"></i> Voltar</a>
                 <form id="formProduct">
                     <div class="row">
                         <div class="col-md-4">
