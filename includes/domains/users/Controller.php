@@ -12,14 +12,17 @@ $request_method = $_SERVER["REQUEST_METHOD"];
 switch($request_method)
 {
     case 'GET':
-        if(!empty($_GET["product_id"]))
-        {
-            $product_id=intval($_GET["product_id"]);
-        }
-        else
-        {
-            echo "Vazio";
-        }
+        $Query = strtoupper($_GET['q']);
+        $Json = [];
+        $Data = $Users->getUserJSON($Query);
+            foreach ($Data as $Value)
+            {
+                $Json[] = [
+                    'id' => $Value->id,
+                    'text' => $Value->name
+                ];
+            }
+        echo json_encode($Json);
         break;
     case 'POST':
         $Verify = $Validator->NewUser($_POST);
@@ -32,11 +35,23 @@ switch($request_method)
             $Password = Utils::parsePassword($_POST['inptPass']);
             $Name = Utils::toUpperCase($_POST['inptName']);
             $Cpf = Utils::removeBadChars($_POST['inptCpf']);
-            $response = [
-                'success' => true,
-                'message' => "Usuário cadastrado com sucesso!"
-            ];
-            echo json_encode($response);
+
+            $Users->setName($Name);
+            $Users->setCpf($Cpf);
+            $Users->setEmail($_POST['inptEmail']);
+            $Users->setPassword($Password);
+            $Users->setAccessLevel($_POST['slctType']);
+            $Users->setState($_POST['slctState']);
+            $response = $Users->insert();
+            if ($response)
+            {
+                $response = [
+                    'success' => true,
+                    'message' => "Usuário cadastrado com sucesso!"
+                ];
+                echo json_encode($response);
+            }
+
         }
         
 

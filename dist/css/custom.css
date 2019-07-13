@@ -5,6 +5,35 @@
     border-radius: 5px;
 }
 
+.highlight-text{
+  color: white;
+  background: #605CA8;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.table-total{
+  background-color: rgb(194, 194, 194);
+  padding: 5px;
+  border-radius: 3px;
+  color: rgb(32, 29, 29);
+  font-weight: bold;
+}
+
+.select2-search__field{
+  text-transform: uppercase;
+}
+
+.warning{
+  background-color: #f39c12 !important;
+  color: white !important;
+}
+
+.warning::hover{
+  background-color: #e08e0b !important;
+  color: white !important;
+}
+
 .pagination > li > a
 {
     background-color: white;

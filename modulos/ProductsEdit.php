@@ -181,9 +181,7 @@ $('#editProduct').click(function(e)
                 type: 'error',
                 title: 'Oops...',
                 text: data.message,
-            }).then(function() {
-                pageReload()
-            });               
+            })             
         }
         else
         {

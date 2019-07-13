@@ -27,6 +27,7 @@ services:
       container_name: sysmarket-db
       volumes:
         - db-data:/var/lib/postgresql/data
+        - ./psql:/var/backups
       environment:
         POSTGRES_PASSWORD: df2019@%
       ports:

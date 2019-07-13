@@ -14,7 +14,7 @@ class Utils {
 
     static function removeBadChars($data)
     {
-        $value = preg_replace('/[^-9]/', '', $data);
+        $value = preg_replace('#[^0-9]#', '', $data);
         return $value;
     }
 

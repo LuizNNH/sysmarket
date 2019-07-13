@@ -19,13 +19,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?php echo URL::getBase(); ?>bower_components/select2/dist/css/select2.min.css">  
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo URL::getBase(); ?>dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?php echo URL::getBase(); ?>dist/css/AdminLTE.min.css">  
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>dist/css/skins/skin-purple.min.css">
   <link rel="stylesheet" href="<?php echo URL::getBase(); ?>dist/css/custom.css"> 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.13.0/dist/sweetalert2.min.css">
+
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>

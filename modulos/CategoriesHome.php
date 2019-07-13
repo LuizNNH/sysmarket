@@ -1,11 +1,11 @@
 <?php
-include_once('./includes/Domains/ACL/Validator.php');
 // Variaveis para controle do menu e do breadcrumb
 $ativo = "categorieshome";
 $page_name = "Gerenciar Categorias";
 $breadcrumb = [
     [
         'title' => 'Dashboard',
+        'icon' => 'fa-dashboard',
         'url' => URL::getBase()
     ],
     [

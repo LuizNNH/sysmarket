@@ -4,7 +4,8 @@ $page_name = "Criar Usuário";
 $breadcrumb = [
     [
         'title' => 'Dashboard',
-        'url' => '/sysmarket'
+        'url'   => URL::getBase(),
+        'icon'  => 'fa-dashboard'
     ],
     [
         'title' => 'Criar Usuário',
@@ -14,6 +15,8 @@ $breadcrumb = [
 
 
 include_once('./includes/_header.php');
+include_once('./includes/Classes/States.php');
+$States = new States();
 ?>
 
 <div class="row">
@@ -22,7 +25,7 @@ include_once('./includes/_header.php');
             <div class="box-body">
                 <form action="" id="userForm">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="lblName">Nome*:</label>
                                 <input 
@@ -34,7 +37,19 @@ include_once('./includes/_header.php');
                                 >
                             </div>
                         </div>
-                        <div class="col-md-6">
+                       <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lblState">Estado Vigente*:</label>
+                                <select name="slctState" id="slctState" class="form-control">
+                                    <?php $Data = $States->findAll('name ASC');
+                                    foreach($Data as $Value) {  
+                                    ?>
+                                    <option value="<?php echo $Value->id ?>"><?php echo $Value->name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>                       
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="lblName">Email*:</label>
                                 <input 

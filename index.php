@@ -8,5 +8,5 @@ if( $modulo == null )
 if(file_exists( "modulos/" . $modulo . ".php" ))
     require "modulos/" . $modulo . ".php";
 else
-    require "modulos/404.php";
+    require "modulos/invoice.php";
 ?>

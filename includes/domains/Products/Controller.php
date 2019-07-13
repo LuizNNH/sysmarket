@@ -9,11 +9,15 @@ $Products = new Products();
 $request_method = $_SERVER["REQUEST_METHOD"];
 switch ($request_method) {
     case 'GET':
-        if (!empty($_GET["product_id"])) {
-            $product_id=intval($_GET["product_id"]);
-        } else {
-            echo "Vazio";
-        }
+        $Data = $Products->findProductsByName(strtoupper($_GET['q']));
+        $Json = [];
+        foreach ($Data as $Value) {
+                $Json[] = [
+                    'id' => $Value->id,
+                    'text' => $Value->name." - ".$Value->apresentation." - ".$Value->lab_name
+                ];
+            }
+        echo json_encode($Json);
         break;
     case 'POST':
         $Verify = $Validator->NewProduct($_POST);
